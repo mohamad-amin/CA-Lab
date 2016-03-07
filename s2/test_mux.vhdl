@@ -2,10 +2,10 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.std_logic_unsigned.all;
 
-entity test_bench_mux is
-end test_bench_mux;
+entity test_mux is
+end test_mux;
 
-architecture behavorial of test_bench_mux is
+architecture behavorial of test_mux is
 component MUX is
     port(
       SEL: in std_logic_vector(1 downto 0);
