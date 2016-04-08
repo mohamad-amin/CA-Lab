@@ -1,18 +1,14 @@
 # VHDL files
 SRCDIR = src
-FILES = $(SRCDIR)/data_array.vhd $(SRCDIR)/tag_valid_array.vhd \
-		$(SRCDIR)/miss_hit_logic.vhd $(SRCDIR)/lru_array.vhd \
-		$(SRCDIR)/cache.vhd $(SRCDIR)/mux.vhd $(SRCDIR)/controller.vhd \
-		$(SRCDIR)/cache_ram.vhd $(SRCDIR)/ram.vhd
+FILES = $(SRCDIR)/alu.vhd $(SRCDIR)/decoder.vhd $(SRCDIR)/four_bit_adder.vhd \
+		$(SRCDIR)/half_adder.vhd $(SRCDIR)/mux.vhd
 
 # Testbench
 TESTDIR = test
-TESTFILES = $(TESTDIR)/data_array_tb.vhd $(TESTDIR)/tag_valid_array_tb.vhd \
-			$(TESTDIR)/miss_hit_logic_tb.vhd $(TESTDIR)/lru_array_tb.vhd \
-			$(TESTDIR)/cache_tb.vhd $(TESTDIR)/mux_tb.vhd \
-			$(TESTDIR)/cache_ram_tb.vhd
+TESTFILES = $(TESTDIR)/alu_tb.vhd $(TESTDIR)/mux_tb.vhd \
+			$(TESTDIR)/decoder_tb.vhd
 SUFFIX = _out# Suffix of files created using -e option
-MODULE = cache_ram_tb# Show wave of this module
+MODULE = alu_tb# Show wave of this module
 STOPTIME = 3500ns
 
 # Run
