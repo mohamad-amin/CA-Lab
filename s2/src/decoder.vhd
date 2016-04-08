@@ -1,11 +1,11 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
-use IEEE.std_logic_unsigned.all;
+use IEEE.numeric_std.all;
 
 entity DECODER2 is
     port(
-            A: in std_logic_vector(1 downto 0);
-            Y: out  std_logic_vector(3 downto 0)
+            A: in unsigned(1 downto 0);
+            Y: out  unsigned(3 downto 0)
         );
 end DECODER2;
 

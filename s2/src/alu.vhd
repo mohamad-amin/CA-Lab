@@ -1,15 +1,15 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
-use IEEE.std_logic_unsigned.all;
+use IEEE.numeric_std.all;
 
 entity ALU8 is port (
-    A,B: in std_logic_vector ( 7 downto 0) ;
+    A,B: in unsigned ( 7 downto 0) ;
     addsub: in std_logic ;
-    r : out std_logic_vector (7 downto 0);
+    r : out unsigned (7 downto 0);
 gt , zero , co : out std_logic);
 end entity ALU8;
 architecture assigns of alu8 is
-    signal mid : std_logic_vector(8 downto 0) ;
+    signal mid : unsigned(8 downto 0) ;
 begin
     mid <= ('0' & A) + ('0' & B) when addsub = '1' else  ('0' & A) - ('0' & B);
     co <= mid(8);
