@@ -23,3 +23,5 @@ transcript*
 sc_dpiheader.h
 vsim.dbg
 
+*.o
+work-obj93.cf
