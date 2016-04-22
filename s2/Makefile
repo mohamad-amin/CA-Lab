@@ -1,7 +1,6 @@
 # VHDL files
 SRCDIR = src
-FILES = $(SRCDIR)/alu.vhd $(SRCDIR)/decoder.vhd $(SRCDIR)/four_bit_adder.vhd \
-		$(SRCDIR)/half_adder.vhd $(SRCDIR)/mux.vhd
+FILES = $(SRCDIR)/alu.vhd $(SRCDIR)/decoder.vhd $(SRCDIR)/mux.vhd
 
 # Testbench
 TESTDIR = test
