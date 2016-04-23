@@ -35,12 +35,12 @@ begin
 
             if((b(i) = '0' and b(i + 1) = '1')) then
                 started := 1;
-                minus(i+1) := '1';
+                minus(i + 1) := '1';
             end if;
 
             if((b(i) = '1' and b(i + 1) = '0')) then
                 started := 0;
-                add(i+1) := '1';
+                add(i + 1) := '1';
             end if;
             i := i + 1;
 
