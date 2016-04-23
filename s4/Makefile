@@ -1,13 +1,13 @@
 # VHDL files
 SRCDIR = src
-FILES = $(SRCDIR)/example1.vhd $(SRCDIR)/example2.vhd
+FILES = $(SRCDIR)/half_adder.vhd $(SRCDIR)/full_adder.vhd \
+		$(SRCDIR)/array_multiplier.vhd
 
 # Testbench
-#TESTDIR = test
-# TESTFILES = $(TESTDIR)/alu_tb.vhd $(TESTDIR)/mux_tb.vhd \
-			$(TESTDIR)/decoder_tb.vhd
+TESTDIR = test
+TESTFILES = $(TESTDIR)/array_multiplier_tb.vhd
 SUFFIX = _out# Suffix of files created using -e option
-MODULE = example1# Show wave of this module
+MODULE = array_multiplier_tb# Show wave of this module
 STOPTIME = 3500ns
 
 # Run
