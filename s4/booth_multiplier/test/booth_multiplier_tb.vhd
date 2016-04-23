@@ -17,12 +17,12 @@ architecture test_bench of booth_multiplier_tb is
     signal a : STD_LOGIC_VECTOR(3 downto 0);
     signal b : STD_LOGIC_VECTOR(3 downto 0);
     signal ans : STD_LOGIC_VECTOR(7 downto 0);
-    signal clk : STD_LOGIC;
+    signal clk : STD_LOGIC := '0';
 begin
 
     mapping : booth_multiplier port map(a, b, clk, ans);
-    a <= "0011";
-    b <= "0001";
+    a <= "0110", "0110" after 10 ns;
+    b <= "0110";
 
     CLOCK:
     clk <= '1' after 1 ns when clk = '0' else

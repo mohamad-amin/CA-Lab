@@ -18,8 +18,13 @@ begin
         variable started : integer := 0;
         variable add : STD_LOGIC_VECTOR(3 downto 0) := (others => '0');
         variable minus : STD_LOGIC_VECTOR(3 downto 0) := (others => '0');
-        variable ans : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+        variable res : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
     begin
+
+        started := 0;
+        add := (others => '0');
+        minus := (others => '0');
+        res := (others => '0');
 
         if(b(0) = '1') then
             started := 1;
@@ -50,7 +55,7 @@ begin
 
         while (i < 4) loop
             if(add(i) = '1') then
-                ans := std_logic_vector(unsigned(ans) + unsigned(a) * 2 ** i);
+                res := std_logic_vector(unsigned(res) + unsigned(a) * 2 ** i);
             end if;
             i := i + 1;
         end loop;
@@ -59,10 +64,12 @@ begin
 
         while (i < 4) loop
             if(minus(i) = '1') then
-                ans := std_logic_vector(unsigned(ans) - unsigned(a) * 2 ** i);
+                res := std_logic_vector(unsigned(res) - unsigned(a) * 2 ** i);
             end if;
             i := i + 1;
         end loop;
+
+        ans <= res;
 
     end process;
 end dataflow;
