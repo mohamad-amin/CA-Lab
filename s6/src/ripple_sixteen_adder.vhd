@@ -31,4 +31,6 @@ begin
         FA : full_adder port map(A=>A(I), B=>B(I), Cin=>cout_mid(I-1), sum=>sum(I), cout=>cout_mid(I));
     end generate GEN_REG;
 
+    cout <= cout_mid(15);
+
 end gate_level_implementation;
