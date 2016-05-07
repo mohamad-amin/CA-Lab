@@ -25,10 +25,10 @@ begin
     Cin <= '1' when command = '1' else
            '0' when command = '0';
 
-    FA1: full_adder port map(A=>A(0), B=>B(0), Cin=>Cin, sum=>sum(0), cout=>cout_mid(0));
+    FA1: full_adder port map(A=>A(0), B=>C(0), Cin=>Cin, sum=>sum(0), cout=>cout_mid(0));
 
     GEN_REG: for I in 1 to 15 generate
-        FA : full_adder port map(A=>A(I), B=>B(I), Cin=>cout_mid(I-1), sum=>sum(I), cout=>cout_mid(I));
+        FA : full_adder port map(A=>A(I), B=>C(I), Cin=>cout_mid(I-1), sum=>sum(I), cout=>cout_mid(I));
     end generate GEN_REG;
 
     cout <= cout_mid(15);
