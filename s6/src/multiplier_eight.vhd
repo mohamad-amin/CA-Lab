@@ -24,7 +24,7 @@ architecture dataflow of multiplier_eight is
     end component;
 
     signal s1, s2, s3, s4 : STD_LOGIC_VECTOR(15 downto 0) := "0000000000000000";
-    signal mid1,mid2 : STD_LOGIC_VECTOR(15 downto 0);
+    signal mid1, mid2 : STD_LOGIC_VECTOR(15 downto 0);
     signal cout1 : STD_LOGIC;
     signal cout2 : STD_LOGIC;
     signal cout3 : STD_LOGIC;
@@ -36,6 +36,6 @@ begin
 
     SUM1: ripple_sixteen_adder port map(s1, s2, mid1, cout1, '0');
     SUM2: ripple_sixteen_adder port map(s3, s4, mid2, cout2, '0');
-    SUM3: ripple_sixteen_adder port map(mid1, mid2, res ,cout3, '0');
+    SUM3: ripple_sixteen_adder port map(mid1, mid2, res,cout3, '0');
 
 end dataflow;
