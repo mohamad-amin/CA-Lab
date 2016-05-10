@@ -28,14 +28,15 @@ architecture dataflow of multiplier_eight is
     signal cout1 : STD_LOGIC;
     signal cout2 : STD_LOGIC;
     signal cout3 : STD_LOGIC;
+    signal command : STD_LOGIC := '0';
 begin
     AM1 : array_multiplier port map(A(3 downto 0), B(3 downto 0), s1(7 downto 0));
     AM2 : array_multiplier port map(A(7 downto 4), B(3 downto 0), s2(11 downto 4));
     AM3 : array_multiplier port map(A(3 downto 0), B(7 downto 4), s3(11 downto 4));
     AM4 : array_multiplier port map(A(7 downto 4), B(7 downto 4), s4(15 downto 8));
 
-    SUM1: ripple_sixteen_adder port map(s1, s2, mid1, cout1, '0');
-    SUM2: ripple_sixteen_adder port map(s3, s4, mid2, cout2, '0');
-    SUM3: ripple_sixteen_adder port map(mid1, mid2, res,cout3, '0');
+    SUM1: ripple_sixteen_adder port map(s1, s2, mid1, cout1, command);
+    SUM2: ripple_sixteen_adder port map(s3, s4, mid2, cout2, command);
+    SUM3: ripple_sixteen_adder port map(mid1, mid2, res, cout3, command);
 
 end dataflow;

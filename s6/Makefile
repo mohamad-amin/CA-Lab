@@ -2,7 +2,7 @@
 #VHDL files
 SRCDIR = src
 FILES = $(SRCDIR)/multiplier_eight.vhd $(SRCDIR)/half_adder.vhd $(SRCDIR)/full_adder.vhd \
-$(SRCDIR)/multiplier_four.vhd
+$(SRCDIR)/multiplier_four.vhd $(SRCDIR)/ripple_sixteen_adder.vhd
 
 # Testbench
 TESTDIR = test
