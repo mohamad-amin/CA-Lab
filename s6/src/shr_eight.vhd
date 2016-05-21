@@ -4,9 +4,9 @@ use IEEE.numeric_std.all;
 
 entity shr_sixteen is
     port(
-            a : in STD_LOGIC_VECTOR(15 downto 0);
+            a : in STD_LOGIC_VECTOR(7 downto 0);
             data_in : in STD_LOGIC;
-            result:out STD_LOGIC_VECTOR(15 downto 0)
+            result:out STD_LOGIC_VECTOR(7 downto 0)
         );
 end shr_sixteen;
 
@@ -21,15 +21,7 @@ begin
     result(4) <= a(5);
     result(5) <= a(6);
     result(6) <= a(7);
-    result(7) <= a(8);
-    result(8) <= a(9);
-    result(9) <= a(10);
-    result(10) <= a(11);
-    result(11) <= a(12);
-    result(12) <= a(13);
-    result(13) <= a(14);
-    result(14) <= a(15);
-    result(15) <= data_in;
+    result(7) <= data_in;
 
 end dataflow;
 
