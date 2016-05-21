@@ -82,6 +82,6 @@ begin
     or_er : or_sixteen port map(a, b, ors);
     xor_er : xor_eight port map(a, b, xors);
     xnor_er : xnor_eight port map(a, b, xnors);
-    shr_er : shr_sixteen port map(a, '0',shrs);
-    shl_er : shl_sixteen port map(a, '0',shls);
+    shr_er : shr_sixteen port map(a, '0', shrs);
+    shl_er : shl_sixteen port map(a, '0', shls);
 end behavioral;
