@@ -90,7 +90,6 @@ begin
     shr_er : shr_sixteen port map(a, '0', shrs);
     shl_er : shl_sixteen port map(a, '0', shls);
     multipl_er : multiplier_eight port map(a, b, multiplies);
-    divid_er : divider_sixteen port map(a, b, dividers);
     full_add_er : ripple_sixteen_adder port map(a, b, sums, cout, command_in);
 
     res <= ands when command = "0000" else
@@ -100,7 +99,6 @@ begin
            shrs  when command = "0100" else
            shls when command = "0101" else
            multiplies when command = "0110" else
-           dividers when command = "0111" else
            sums when command = "1000";
 
 end behavioral;

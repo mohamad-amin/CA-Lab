@@ -4,9 +4,9 @@ use IEEE.numeric_std.all;
 
 entity divider_sixteen is
     port(
-            a : in STD_LOGIC_VECTOR(7 downto 0);
-            b : in STD_LOGIC_VECTOR(7 downto 0);
-            res : out STD_LOGIC_VECTOR(7 downto 0)
+            a : in STD_LOGIC_VECTOR(15 downto 0);
+            b : in STD_LOGIC_VECTOR(15 downto 0);
+            res : out STD_LOGIC_VECTOR(15 downto 0)
         );
 end entity;
 
@@ -15,5 +15,5 @@ architecture behavorial of divider_sixteen is
 
 begin
     temp <= to_integer(unsigned(a)) / to_integer(unsigned(b));
-    res <= STD_LOGIC_VECTOR(to_unsigned(temp, 8));
+    res <= STD_LOGIC_VECTOR(to_unsigned(temp, 15));
 end behavorial;

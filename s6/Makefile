@@ -1,14 +1,17 @@
 #
 #VHDL files
 SRCDIR = src
-FILES = $(SRCDIR)/multiplier_eight.vhd $(SRCDIR)/half_adder.vhd $(SRCDIR)/full_adder.vhd \
-$(SRCDIR)/multiplier_four.vhd $(SRCDIR)/ripple_sixteen_adder.vhd
+FILES = $(SRCDIR)/multiplier_eight.vhd $(SRCDIR)/half_adder.vhd \
+		$(SRCDIR)/full_adder.vhd  $(SRCDIR)/and_sixteen.vhd $(SRCDIR)/or_sixteen.vhd \
+		$(SRCDIR)/multiplier_four.vhd $(SRCDIR)/ripple_sixteen_adder.vhd $(SRCDIR)/alu.vhd \
+		$(SRCDIR)/xnor_sixteen.vhd $(SRCDIR)/xor_sixteen.vhd $(SRCDIR)/shr_sixteen.vhd \
+		$(SRCDIR)/divider_sixteen.vhd $(SRCDIR)/shl_sixteen.vhd
 
 # Testbench
 TESTDIR = test
-TESTFILES = $(TESTDIR)/multiplier_eight_tb.vhd
+TESTFILES = $(TESTDIR)/alu_tb.vhd
 SUFFIX = _out# Suffix of files created using -e option
-MODULE = multiplier_eight_tb# Show wave of this module
+MODULE = alu_tb# Show wave of this module
 STOPTIME = 3500ns
 
 # Run
