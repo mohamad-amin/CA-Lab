@@ -24,6 +24,8 @@ begin
     process(clk)
     begin
         if(op_code = "0000") then
-            end if;
+            memory_read_addr <= '1';
+
+        end if;
     end process;
 end behavrial;
