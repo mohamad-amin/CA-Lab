@@ -12,8 +12,10 @@ entity datapath is
             mem_write : in STD_LOGIC;
             mem_reg : in STD_LOGIC;
             mem_read : in STD_LOGIC;
+            pc_increment : in STD_LOGIC;
             clk : in STD_LOGIC;
-            address : in STD_LOGIC_VECTOR(3 downto 0)
+            address : in STD_LOGIC_VECTOR(3 downto 0);
+            opcode : out STD_LOGIC_VECTOR(3 downto 0)
         );
 end entity;
 
@@ -42,18 +44,39 @@ architecture behavorial of datapath is
             );
     end component;
     component register_file is
-    port(
-            rs1 : in STD_LOGIC_VECTOR(3 downto 0);
-            rs2 : in STD_LOGIC_VECTOR(3 downto 0);
-            load_address : in STD_LOGIC_VECTOR(3 downto 0);
-            write_data : in STD_LOGIC_VECTOR(15 downto 0);
-            write : in STD_LOGIC;
-            A : out STD_LOGIC_VECTOR(15 downto 0);
-            B : out STD_LOGIC_VECTOR(15 downto 0)
-        );
+        port(
+                rs1 : in STD_LOGIC_VECTOR(3 downto 0);
+                rs2 : in STD_LOGIC_VECTOR(3 downto 0);
+                load_address : in STD_LOGIC_VECTOR(3 downto 0);
+                write_data : in STD_LOGIC_VECTOR(15 downto 0);
+                write : in STD_LOGIC;
+                A : out STD_LOGIC_VECTOR(15 downto 0);
+                B : out STD_LOGIC_VECTOR(15 downto 0)
+            );
     end component;
 
-    signal pc : STD_LOGIC_VECTOR(3 downto 0);
+    component instruction_register is
+        port(instruction : in STD_LOGIC_VECTOR(15 downto 0);
+             instruction_p1 : out STD_LOGIC_VECTOR(3 downto 0);
+             instruction_p2 : out STD_LOGIC_VECTOR(3 downto 0);
+             instruction_p3 : out STD_LOGIC_VECTOR(3 downto 0);
+             instruction_p4 : out STD_LOGIC_VECTOR(3 downto 0)
+         );
+    end component;
+    component signed_extend is
+        port(
+                a : in STD_LOGIC_VECTOR(7 downto 0);
+                extended : out STD_LOGIC_VECTOR(15 downto 0)
+            );
+    end component;
+    component pc is
+        port(
+                increment : in STD_LOGIC;
+                pc_out : out STD_LOGIC_VECTOR(3 downto 0)
+            );
+    end component;
+
+    signal pc_signal : STD_LOGIC_VECTOR(3 downto 0);
     signal instruction : STD_LOGIC_VECTOR(15 downto 0);
     signal reg_read: STD_LOGIC_VECTOR(15 downto 0);
     signal data_memory_readdata: STD_LOGIC_VECTOR(15 downto 0);
@@ -64,9 +87,28 @@ architecture behavorial of datapath is
     signal rs2 : STD_LOGIC_VECTOR(3 downto 0);
     signal load_address : STD_LOGIC_VECTOR(3 downto 0);
     signal mux_3 : STD_LOGIC_VECTOR(15 downto 0);
+    signal instruction_p1 : STD_LOGIC_VECTOR(15 downto 12);
+    signal instruction_p2 : STD_LOGIC_VECTOR(11 downto 8);
+    signal instruction_p3 : STD_LOGIC_VECTOR(7 downto 4);
+    signal instruction_p4 : STD_LOGIC_VECTOR(3 downto 0);
+    signal instruction_p3_p4 : STD_LOGIC_VECTOR(7 downto 0);
+    signal extended : STD_LOGIC_VECTOR(15 downto 0);
+    signal a_register_file, b_register_file : STD_LOGIC_VECTOR(15 downto 0);
 begin
-    instruction_mem : instruction_memory port map(clk, address, instruction);
+    instruction_mem : instruction_memory port map(clk, pc_signal, instruction);
     data_mem : data_memory port map(clk,address,reg_read,data_memory_readdata,mem_write,mem_read);
     alu_instance : alu port map(alu_opcode, alu_operand_1, alu_operand_2, alu_out);
-    register_file_instance : register_file port map(rs1, rs2, load_address, mux_3, reg_write);
+    register_file_instance : register_file port map(rs1, rs2, load_address, mux_3, reg_write, a_register_file, b_register_file);
+    instruction_splitter : instruction_register port map(instruction, instruction_p1, instruction_p2, instruction_p3, instruction_p4);
+    signed_extend_instance : signed_extend port map(instruction_p3_p4, extended);
+    program_counter : pc port map(pc_increment, pc_signal);
+
+    -- signal assignments
+    alu_operand_2 <= b_register_file when alu_src = '0' else
+                     extended when alu_src = '1';
+    alu_operand_1 <= a_register_file;
+
+    mux_3 <= alu_out when mem_reg = '0' else
+             data_memory_readdata when mem_reg = '1';
+
 end behavorial;

@@ -1,0 +1,12 @@
+opcode operation
+0000   ADD
+0001   SUBTRACT
+0010   MULTIPLY
+0011   DIVIDER
+0100   AND
+0101   OR
+0110   XOR
+0111   XNOR
+
+
+//commited by mmsamiei :D

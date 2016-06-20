@@ -4,7 +4,8 @@ use IEEE.numeric_std.all;
 
 entity pc is
     port(
-            increment : in STD_LOGIC
+            increment : in STD_LOGIC;
+            pc_out : out STD_LOGIC_VECTOR(3 downto 0)
         );
 end entity;
 
