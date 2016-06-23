@@ -79,7 +79,7 @@ architecture behavioral of alu is
             );
     end component;
 
-    signal sums, xors, xnors, ors, ands, multiplies, dividers, shrs, shls : STD_LOGIC_VECTOR(15 downto 0);
+    signal sums,sub, xors, xnors, ors, ands, multiplies, dividers, shrs, shls : STD_LOGIC_VECTOR(15 downto 0);
     signal command_in : STD_LOGIC;
     signal cout : STD_LOGIC;
 begin
@@ -90,7 +90,10 @@ begin
     shr_er : shr_sixteen port map(a, '0', shrs);
     shl_er : shl_sixteen port map(a, '0', shls);
     multipl_er : multiplier_eight port map(a, b, multiplies);
-    full_add_er : ripple_sixteen_adder port map(a, b, sums, cout, command_in);
+    full_add_er : ripple_sixteen_adder port map(a, b, sums, cout, '0');
+	full_sub_er : ripple_sixteen_adder port map(a, b, sub, cout, '1');
+	dividers_ins : divider_sixteen port map (a,b,dividers);
+
 
     res <= ands when command = "0000" else
            ors when command = "0001" else
@@ -99,6 +102,8 @@ begin
            shrs  when command = "0100" else
            shls when command = "0101" else
            multiplies when command = "0110" else
-           sums when command = "1000";
-
+           sums when command = "1000" else
+		   sub when command = "1001" else
+			dividers when command = "1010";
+			
 end behavioral;
