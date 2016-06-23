@@ -22,9 +22,12 @@ end entity;
 architecture behavrial of controller is
 begin
     process(clk)
+    constant begin_store : integer := 1;
+    variable state : integer := 0;
     begin
-        if(op_code = "0000") then
-            memory_read_addr <= '1';
+        if(op_code = "1110") then
+            memory_write_addr <= '1';
+            register_write_addr <= '1';
 
         end if;
     end process;
