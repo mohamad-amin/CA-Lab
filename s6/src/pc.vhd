@@ -10,7 +10,7 @@ ENTITY PC IS
 		Rst   : in  std_logic);
 END PC;
 
-ARCHITECTURE ProgramCounter_1 of PC is
+ARCHITECTURE behavorial of PC is
 
 BEGIN
  	reg: process(CLK)
@@ -22,4 +22,4 @@ BEGIN
 			outPC <= inPC;
 		end if;
 	end process;
-END PC;
+END behavorial;
