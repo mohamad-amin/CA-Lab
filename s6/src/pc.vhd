@@ -1,26 +1,25 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
-entity pc is
-    port(
-            increment : in STD_LOGIC;
-            load : in STD_LOGIC;
-            in_addr : in STD_LOGIC_VECTOR(3 downto 0);
-            pc_out : out STD_LOGIC_VECTOR(3 downto 0)
-        );
-end entity;
+ENTITY PC IS
+	port (
+		inPC  : in  std_logic_vector(3 downto 0);
+		outPC : out std_logic_vector(3 downto 0);
+		CLK   : in  std_logic;
+		Rst   : in  std_logic);
+END PC;
 
-architecture behavorial of pc is
-    signal current_pc : STD_LOGIC_VECTOR(3 downto 0) := "0000";
-    signal temp : integer;
-begin
-    pc_out <= in_addr when load = '1';
-    process(increment)
-    begin
-        if(increment'event and load = '0') then
-            temp <= to_integer(unsigned(current_pc)) + 2;
-            current_pc <= STD_LOGIC_VECTOR(to_unsigned(temp, 4));
-        end if;
-    end process;
-end behavorial;
+ARCHITECTURE ProgramCounter_1 of PC is
+
+BEGIN
+ 	reg: process(CLK)
+	begin
+		if (Rst='1') then
+			outPC <= std_logic_vector(to_signed(0,4));
+		end if;
+		if rising_edge(CLK) then
+			outPC <= inPC;
+		end if;
+	end process;
+END PC;
