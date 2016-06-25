@@ -109,7 +109,8 @@ begin
     register_file_instance : register_file port map(rs1, rs2, load_address, mux_3, reg_write, a_register_file, b_register_file);
     instruction_splitter : instruction_register port map(instruction, instruction_p1, instruction_p2, instruction_p3, instruction_p4);
     signed_extend_instance : signed_extend port map(instruction_p3_p4, extended);
-    program_counter : pc port map(pc_signal);
+    program_counter : pc port map(pc_in, pc_signal, clk);
+
 
     -- signal assignments
     alu_operand_2 <= b_register_file when alu_src = '0' else
