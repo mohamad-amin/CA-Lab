@@ -128,7 +128,7 @@ begin
     pc_plus_4 <= std_logic_vector(to_unsigned(pc_plus_4_tmp, 16));
 
     instruction_p3_p4 <= instruction_p3 & instruction_p4;
-    shifted_extended <= extended(15 downto 1) & '0';
+    shifted_extended <= extended(14 downto 0) & '0';
 
     extended_plus_pc_tmp <= to_integer(unsigned(pc_signal)) + to_integer(unsigned(shifted_extended));
     extended_plus_pc <= std_logic_vector(to_unsigned(extended_plus_pc_tmp,16));

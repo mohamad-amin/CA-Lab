@@ -18,7 +18,7 @@ end entity;
 architecture behavorial of register_file is
     type data_array_data is array (15 downto 0) of STD_LOGIC_VECTOR (15 downto 0);
 
-    signal data : data_array_data;
+    signal data : data_array_data := ("0001000100001000","0001001110011000",others=>"1100011111111111");
 begin
     A <= data(to_integer(unsigned(rs1)));
     B <= data(to_integer(unsigned(rs2)));

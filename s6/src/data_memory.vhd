@@ -13,7 +13,7 @@ end data_memory;
 
 architecture dataflow of data_memory is
     type ram_array is array (15 downto 0) of std_logic_vector (15 downto 0);
-    signal data_array : ram_array;
+    signal data_array : ram_array := ("0110000000100001","0110000111100001",others =>x"0000");
 begin
     process(clk,mem_write,Data_in,mem_read)
     begin

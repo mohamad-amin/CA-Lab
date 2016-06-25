@@ -13,6 +13,7 @@ entity controller is
 		MemWrite : out STD_LOGIC;
 		MemToReg : out STD_LOGIC;
 		MemRead : out STD_LOGIC;
+		pcsrc : out STD_LOGIC;
 		Branch : out STD_LOGIC;
 		Jump : out STD_LOGIC
     );
@@ -22,6 +23,8 @@ architecture behavrial of controller is
 begin
     process(clk)
     begin
+		jump<='0';
+		branch<='0';
         if(op_code = "0000") then --add
             RegDst <= '1';
 			RegWrite <='1';
@@ -30,6 +33,7 @@ begin
 			MemWrite<='0';
 			MemRead<='0';
 			MemToReg<='0';
+			pcsrc<= '0';
         end if;
 		if(op_code = "0001") then --sub
             RegDst <= '1';
@@ -39,6 +43,7 @@ begin
 			MemWrite<='0';
 			MemRead<='0';
 			MemToReg<='0';
+			pcsrc<= '0';
         end if;
 		if(op_code = "0010") then --and
             RegDst <= '1';
@@ -48,6 +53,7 @@ begin
 			MemWrite<='0';
 			MemRead<='0';
 			MemToReg<='0';
+			pcsrc<= '0';
         end if;
 		if(op_code = "0011") then --or
             RegDst <= '1';
@@ -57,6 +63,7 @@ begin
 			MemWrite<='0';
 			MemRead<='0';
 			MemToReg<='0';
+			pcsrc<= '0';
         end if;
 		if(op_code = "0100") then --MUL
             RegDst <= '1';
@@ -66,6 +73,7 @@ begin
 			MemWrite<='0';
 			MemRead<='0';
 			MemToReg<='0';
+			pcsrc<= '0';
         end if;
 		if(op_code = "0101") then --DIV
             RegDst <= '1';
@@ -75,6 +83,7 @@ begin
 			MemWrite<='0';
 			MemRead<='0';
 			MemToReg<='0';
+			pcsrc<= '0';
         end if;
 		if(op_code = "0110") then --XOR
             RegDst <= '1';
@@ -84,6 +93,7 @@ begin
 			MemWrite<='0';
 			MemRead<='0';
 			MemToReg<='0';
+			pcsrc<= '0';
         end if;
 		if(op_code = "1101") then --load
             RegDst <= '0';
@@ -93,6 +103,7 @@ begin
 			MemWrite<='0';
 			MemRead<='1';
 			MemToReg<='1';
+			pcsrc<= '0';
         end if;
 		if(op_code = "1110") then --store
             RegDst <= '0';
@@ -102,6 +113,7 @@ begin
 			MemWrite<='1';
 			MemRead<='0';
 			MemToReg<='0';
+			pcsrc<= '0';
         end if;
 		if(op_code = "1100") then --beq
             RegDst <= '0';
@@ -110,7 +122,8 @@ begin
 			AluOP<="1001";
 			MemWrite<='0';
 			MemRead<='0';
-			MemToReg<='0';
+			MemToReg<='0';			
+			pcsrc<= '1';
         end if;
     end process;
 end behavrial;
