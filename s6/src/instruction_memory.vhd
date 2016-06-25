@@ -4,7 +4,7 @@ use IEEE.numeric_std.all;
 
 entity instruction_memory is
     port(clk : in STD_LOGIC;
-         address:in STD_LOGIC_VECTOR(3 downto 0);
+         address:in STD_LOGIC_VECTOR(15 downto 0);
          data_out:out STD_LOGIC_VECTOR(15 downto 0)
          );
 end instruction_memory;
