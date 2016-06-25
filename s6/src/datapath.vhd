@@ -14,8 +14,8 @@ entity datapath is
             mem_read : in STD_LOGIC; --MemRead
             pc_src : in STD_LOGIC; --PCSrc
             clk : in STD_LOGIC;
-            address : in STD_LOGIC_VECTOR(3 downto 0);
-            opcode : out STD_LOGIC_VECTOR(3 downto 0)
+            opcode : out STD_LOGIC_VECTOR(3 downto 0);
+            jump : STD_LOGIC
         );
 end entity;
 
