@@ -1,11 +1,16 @@
 #
 #VHDL files
 SRCDIR = src
-FILES = $(SRCDIR)/multiplier_eight.vhd $(SRCDIR)/half_adder.vhd \
-		$(SRCDIR)/full_adder.vhd  $(SRCDIR)/and_sixteen.vhd $(SRCDIR)/or_sixteen.vhd \
-		$(SRCDIR)/multiplier_four.vhd $(SRCDIR)/ripple_sixteen_adder.vhd $(SRCDIR)/alu.vhd \
-		$(SRCDIR)/xnor_sixteen.vhd $(SRCDIR)/xor_sixteen.vhd $(SRCDIR)/shr_sixteen.vhd \
-		$(SRCDIR)/divider_sixteen.vhd $(SRCDIR)/shl_sixteen.vhd
+FILES = $(SRCDIR)/alu.vhd $(SRCDIR)/and_sixteen.vhd $(SRCDIR)/contoller.vhd \
+		$(SRCDIR)/data_memory.vhd $(SRCDIR)/datapath.vhd $(SRCDIR)/divider_sixteen.vhd \
+		$(SRCDIR)/full_adder.vhd $(SRCDIR)/half_adder.vhd $(SRCDIR)/instruction_memory.vhd \
+		$(SRCDIR)/instruction_register.vhd $(SRCDIR)/memory_data_register.vhd \
+		$(SRCDIR)/mips.vhd $(SRCDIR)/multiplier_eight.vhd $(SRCDIR)/multiplier_four.vhd \
+		$(SRCDIR)/mux_sixteen.vhd $(SRCDIR)/or_sixteen.vhd $(SRCDIR)/pc.vhd $(SRCDIR)/ram.vhd \
+		$(SRCDIR)/register_file.vhd $(SRCDIR)/ripple_sixteen_adder.vhd $(SRCDIR)/shl_sixteen.vhd \
+		$(SRCDIR)/shr_sixteen.vhd $(SRCDIR)/signed_extend.vhd $(SRCDIR)/xnor_sixteen.vhd \
+		$(SRCDIR)/xor_sixteen.vhd
+
 
 # Testbench
 TESTDIR = test
