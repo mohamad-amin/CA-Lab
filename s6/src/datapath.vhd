@@ -108,6 +108,8 @@ begin
                      extended when alu_src = '1';
     alu_operand_1 <= a_register_file;
 
+    instruction_p3_p4 <= instruction_p3 & instruction_p4;
+
     mux_3 <= alu_out when mem_reg = '0' else
              data_memory_readdata when mem_reg = '1';
 
