@@ -78,7 +78,7 @@ architecture behavorial of datapath is
     end component;
 
 
-    signal pc_signal : STD_LOGIC_VECTOR(15 downto 0);
+    signal pc_signal : STD_LOGIC_VECTOR(15 downto 0) := "0000000000000000";
     signal instruction : STD_LOGIC_VECTOR(15 downto 0);
     signal data_memory_readdata: STD_LOGIC_VECTOR(15 downto 0);
     signal alu_operand_1:STD_LOGIC_VECTOR(15 downto 0);
