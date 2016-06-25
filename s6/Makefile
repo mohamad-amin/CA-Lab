@@ -16,7 +16,7 @@ FILES = $(SRCDIR)/alu.vhd $(SRCDIR)/and_sixteen.vhd $(SRCDIR)/contoller.vhd \
 TESTDIR = test
 TESTFILES = $(TESTDIR)/alu_tb.vhd
 SUFFIX = _out# Suffix of files created using -e option
-MODULE = alu_tb# Show wave of this module
+MODULE = mips# Show wave of this module
 STOPTIME = 3500ns
 
 # Run
@@ -26,7 +26,7 @@ RUN_FLAGS = --stop-time=$(STOPTIME) --vcd=$(MODULE).vcd
 GHDL_CMD = ghdl
 GHDL_FLAGS = -fexplicit --ieee=synopsys
 
-all: | ghdl-compile ghdl-simulate show
+all: | ghdl-compile ghdl-simulate
 
 ghdl-compile: $(FILES) $(TESTFILES)
 	$(GHDL_CMD) -a $(GHDL_FLAGS) $(FILES) $(TESTFILES)

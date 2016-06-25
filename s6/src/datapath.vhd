@@ -32,8 +32,8 @@ architecture behavorial of datapath is
              data_in:in STD_LOGIC_VECTOR(15 downto 0);
              read_data:out STD_LOGIC_VECTOR(15 downto 0);
              mem_write:in STD_LOGIC;
-             mem_read:in STD_LOGIC;
-             data_ready:out STD_LOGIC);
+             mem_read:in STD_LOGIC
+             );
     end  component;
     component alu is
         port(
@@ -96,10 +96,10 @@ architecture behavorial of datapath is
     signal extended : STD_LOGIC_VECTOR(15 downto 0);
     signal a_register_file, b_register_file : STD_LOGIC_VECTOR(15 downto 0);
     signal pc_plus_4 : STD_LOGIC_VECTOR(15 downto 0);
-    signal pc_plus_4_tmp : integer;
+    signal pc_plus_4_tmp : integer := 0;
     signal shifted_extended : STD_LOGIC_VECTOR(15 downto 0);
     signal extended_plus_pc : STD_LOGIC_VECTOR(15 downto 0);
-    signal extended_plus_pc_tmp : integer;
+    signal extended_plus_pc_tmp : integer := 0;
     signal pc_in : STD_LOGIC_VECTOR(15 downto 0);
 begin
     instruction_mem : instruction_memory port map(clk, pc_signal, instruction);
@@ -125,7 +125,7 @@ begin
     load_address <= instruction_p2 when reg_dest = '0' else
                     instruction_p3 when reg_dest = '1';
     pc_plus_4_tmp <= to_integer(unsigned(pc_signal)) + 2;
-    pc_plus_4 <= std_logic_vector(to_unsigned(pc_plus_4_tmp, 15));
+    pc_plus_4 <= std_logic_vector(to_unsigned(pc_plus_4_tmp, 16));
 
     instruction_p3_p4 <= instruction_p3 & instruction_p4;
     shifted_extended <= extended(15 downto 1) & '0';
