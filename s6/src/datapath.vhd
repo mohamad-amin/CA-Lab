@@ -22,13 +22,13 @@ end entity;
 architecture behavorial of datapath is
     component instruction_memory is
         port(clk : in STD_LOGIC;
-             address:in STD_LOGIC_VECTOR(3 downto 0);
+             address:in STD_LOGIC_VECTOR(15 downto 0);
              data_out:out STD_LOGIC_VECTOR(15 downto 0)
          );
     end component;
     component data_memory is
         port(clk:in STD_LOGIC;
-             address:in STD_LOGIC_VECTOR(3 downto 0);
+             address:in STD_LOGIC_VECTOR(15 downto 0);
              data_in:in STD_LOGIC_VECTOR(15 downto 0);
              read_data:out STD_LOGIC_VECTOR(15 downto 0);
              mem_write:in STD_LOGIC;
@@ -71,14 +71,14 @@ architecture behavorial of datapath is
     end component;
     component pc is
     port (
-             inPC  : in  std_logic_vector(3 downto 0);
-             outPC : out std_logic_vector(3 downto 0);
+             inPC  : in  std_logic_vector(15 downto 0);
+             outPC : out std_logic_vector(15 downto 0);
              clk   : in  std_logic
          );
     end component;
 
 
-    signal pc_signal : STD_LOGIC_VECTOR(3 downto 0);
+    signal pc_signal : STD_LOGIC_VECTOR(15 downto 0);
     signal instruction : STD_LOGIC_VECTOR(15 downto 0);
     signal data_memory_readdata: STD_LOGIC_VECTOR(15 downto 0);
     signal alu_operand_1:STD_LOGIC_VECTOR(15 downto 0);
@@ -95,12 +95,12 @@ architecture behavorial of datapath is
     signal instruction_p3_p4 : STD_LOGIC_VECTOR(7 downto 0);
     signal extended : STD_LOGIC_VECTOR(15 downto 0);
     signal a_register_file, b_register_file : STD_LOGIC_VECTOR(15 downto 0);
-    signal pc_plus_4 : STD_LOGIC_VECTOR(3 downto 0);
+    signal pc_plus_4 : STD_LOGIC_VECTOR(15 downto 0);
     signal pc_plus_4_tmp : integer;
     signal shifted_extended : STD_LOGIC_VECTOR(15 downto 0);
     signal extended_plus_pc : STD_LOGIC_VECTOR(15 downto 0);
     signal extended_plus_pc_tmp : integer;
-    signal pc_in : STD_LOGIC_VECTOR(3 downto 0);
+    signal pc_in : STD_LOGIC_VECTOR(15 downto 0);
 begin
     instruction_mem : instruction_memory port map(clk, pc_signal, instruction);
     data_mem : data_memory port map(clk, alu_out, alu_out,
@@ -121,9 +121,10 @@ begin
     rs1 <= instruction_p2;
     rs2 <= instruction_p3;
 
-    load_address <=
+    load_address <= instruction_p2 when reg_dest = '0' else
+                    instruction_p3 when reg_dest = '1';
     pc_plus_4_tmp <= to_integer(unsigned(pc_signal)) + 2;
-    pc_plus_4 <= std_logic_vector(to_unsigned(pc_plus_4_tmp, 4));
+    pc_plus_4 <= std_logic_vector(to_unsigned(pc_plus_4_tmp, 15));
 
     instruction_p3_p4 <= instruction_p3 & instruction_p4;
     shifted_extended <= extended(15 downto 1) & '0';
