@@ -12,7 +12,9 @@ entity controller is
 		AluSrc : out STD_LOGIC;
 		MemWrite : out STD_LOGIC;
 		MemToReg : out STD_LOGIC;
-		MemRead : out STD_LOGIC
+		MemRead : out STD_LOGIC;
+		Branch : out STD_LOGIC;
+		Jump : out STD_LOGIC
     );
 end entity;
 
