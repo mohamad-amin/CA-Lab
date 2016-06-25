@@ -15,7 +15,7 @@ architecture dataflow of data_memory is
     type ram_array is array (15 downto 0) of std_logic_vector (15 downto 0);
     signal data_array : ram_array;
 begin
-    process(clk,mem_write,Data_in)
+    process(clk,mem_write,Data_in,mem_read)
     begin
         read_data <= data_array(to_integer(unsigned(address)));
         if(mem_write = '1' and  clk='1') then

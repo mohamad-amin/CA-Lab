@@ -4,6 +4,7 @@ use IEEE.numeric_std.all;
 
 entity datapath is
     port(
+            alu_opcode : in STD_LOGIC_VECTOR(3 downto 0);
             branch : in STD_LOGIC;
             reg_dest : in STD_LOGIC; --RegDst
             reg_write : in STD_LOGIC; --RegWrite
@@ -79,7 +80,6 @@ architecture behavorial of datapath is
 
     signal pc_signal : STD_LOGIC_VECTOR(3 downto 0);
     signal instruction : STD_LOGIC_VECTOR(15 downto 0);
-    signal reg_read: STD_LOGIC_VECTOR(15 downto 0);
     signal data_memory_readdata: STD_LOGIC_VECTOR(15 downto 0);
     signal alu_operand_1:STD_LOGIC_VECTOR(15 downto 0);
     signal alu_operand_2:STD_LOGIC_VECTOR(15 downto 0);
@@ -95,7 +95,6 @@ architecture behavorial of datapath is
     signal instruction_p3_p4 : STD_LOGIC_VECTOR(7 downto 0);
     signal extended : STD_LOGIC_VECTOR(15 downto 0);
     signal a_register_file, b_register_file : STD_LOGIC_VECTOR(15 downto 0);
-    signal alu_opcode : STD_LOGIC_VECTOR(3 downto 0);
     signal pc_plus_4 : STD_LOGIC_VECTOR(3 downto 0);
     signal pc_plus_4_tmp : integer;
     signal shifted_extended : STD_LOGIC_VECTOR(15 downto 0);
@@ -104,7 +103,8 @@ architecture behavorial of datapath is
     signal pc_in : STD_LOGIC_VECTOR(3 downto 0);
 begin
     instruction_mem : instruction_memory port map(clk, pc_signal, instruction);
-    data_mem : data_memory port map(clk,address,reg_read,data_memory_readdata,mem_write,mem_read);
+    data_mem : data_memory port map(clk, alu_out, alu_out,
+        data_memory_readdata, mem_write, mem_read);
     alu_instance : alu port map(alu_opcode, alu_operand_1, alu_operand_2, alu_out);
     register_file_instance : register_file port map(rs1, rs2, load_address, mux_3, reg_write, a_register_file, b_register_file);
     instruction_splitter : instruction_register port map(instruction, instruction_p1, instruction_p2, instruction_p3, instruction_p4);
@@ -116,6 +116,12 @@ begin
                      extended when alu_src = '1';
     alu_operand_1 <= a_register_file;
 
+    opcode <= instruction_p1;
+
+    rs1 <= instruction_p2;
+    rs2 <= instruction_p3;
+
+    load_address <=
     pc_plus_4_tmp <= to_integer(unsigned(pc_signal)) + 2;
     pc_plus_4 <= std_logic_vector(to_unsigned(pc_plus_4_tmp, 4));
 
