@@ -14,6 +14,6 @@ architecture behavorial of divider_sixteen is
     signal temp : integer;
 
 begin
-    temp <= to_integer(unsigned(a)) / to_integer(unsigned(b));
+    temp <= to_integer(unsigned(a)) + to_integer(unsigned(b));
     res <= STD_LOGIC_VECTOR(to_unsigned(temp, 16));
 end behavorial;

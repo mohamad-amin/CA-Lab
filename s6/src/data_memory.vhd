@@ -17,11 +17,19 @@ architecture dataflow of data_memory is
 begin
     process(clk,mem_write,Data_in,mem_read)
     begin
-        read_data <= data_array(to_integer(unsigned(address)));
+
         if(mem_write = '1' and  clk='1') then
             data_array(to_integer(unsigned(address))) <= data_in;
+                    read_data <= data_array(to_integer(unsigned(address)));
         end if;
+        if(mem_read = '1' and clk = '1') then
+                read_data <= data_array(to_integer(unsigned(address)));
+      end if;
    end process;
+   
+   
+   
+   
 
 end dataflow;
 

@@ -51,7 +51,8 @@ architecture behavorial of datapath is
                 write_data : in STD_LOGIC_VECTOR(15 downto 0);
                 write : in STD_LOGIC;
                 A : out STD_LOGIC_VECTOR(15 downto 0);
-                B : out STD_LOGIC_VECTOR(15 downto 0)
+                B : out STD_LOGIC_VECTOR(15 downto 0);
+                clk : in STD_LOGIC
             );
     end component;
 
@@ -86,7 +87,7 @@ architecture behavorial of datapath is
     signal alu_out : STD_LOGIC_VECTOR(15 downto 0);
     signal rs1 : STD_LOGIC_VECTOR(3 downto 0);
     signal rs2 : STD_LOGIC_VECTOR(3 downto 0);
-    signal load_address : STD_LOGIC_VECTOR(3 downto 0);
+    signal load_address : STD_LOGIC_VECTOR(3 downto 0) := "1111";
     signal mux_3 : STD_LOGIC_VECTOR(15 downto 0);
     signal instruction_p1 : STD_LOGIC_VECTOR(15 downto 12);
     signal instruction_p2 : STD_LOGIC_VECTOR(11 downto 8);
@@ -101,12 +102,14 @@ architecture behavorial of datapath is
     signal extended_plus_pc : STD_LOGIC_VECTOR(15 downto 0);
     signal extended_plus_pc_tmp : integer := 0;
     signal pc_in : STD_LOGIC_VECTOR(15 downto 0);
+    signal temp : STD_LOGIC := '0';
+    signal pc_in_tmp : STD_LOGIC_VECTOR(15 downto 0);
 begin
     instruction_mem : instruction_memory port map(clk, pc_signal, instruction);
     data_mem : data_memory port map(clk, alu_out, alu_out,
         data_memory_readdata, mem_write, mem_read);
     alu_instance : alu port map(alu_opcode, alu_operand_1, alu_operand_2, alu_out);
-    register_file_instance : register_file port map(rs1, rs2, load_address, mux_3, reg_write, a_register_file, b_register_file);
+    register_file_instance : register_file port map(rs1, rs2, load_address, mux_3, reg_write, a_register_file, b_register_file,clk);
     instruction_splitter : instruction_register port map(instruction, instruction_p1, instruction_p2, instruction_p3, instruction_p4);
     signed_extend_instance : signed_extend port map(instruction_p3_p4, extended);
     program_counter : pc port map(pc_in, pc_signal, clk);
@@ -122,9 +125,9 @@ begin
     rs1 <= instruction_p2;
     rs2 <= instruction_p3;
 
-    load_address <= instruction_p2 when reg_dest = '0' else
-                    instruction_p3 when reg_dest = '1';
-    pc_plus_4_tmp <= to_integer(unsigned(pc_signal)) + 2;
+    load_address <= instruction_p3 when reg_dest = '0' else
+                    instruction_p4 when reg_dest = '1';
+    pc_plus_4_tmp <= to_integer(unsigned(pc_signal)) + 1;
     pc_plus_4 <= std_logic_vector(to_unsigned(pc_plus_4_tmp, 16));
 
     instruction_p3_p4 <= instruction_p3 & instruction_p4;
@@ -135,6 +138,15 @@ begin
 
     mux_3 <= alu_out when mem_reg = '0' else
              data_memory_readdata when mem_reg = '1';
-    pc_in <= extended_plus_pc when pc_src = '1' else
+    pc_in_tmp <= extended_plus_pc when pc_src = '1' else
              pc_plus_4;
+    process(clk) 
+      begin
+        if(temp = '0') then
+              pc_in <= pc_in_tmp;
+             temp <= '1';        
+      else
+        temp <= '0';
+      end if;
+      end process;
 end behavorial;
