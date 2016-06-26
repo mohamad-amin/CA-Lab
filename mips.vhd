@@ -4,6 +4,7 @@ use IEEE.numeric_std.all;
 
 entity mips is
     port(
+			reset : in std_logic;
             clk : in STD_LOGIC
         );
     end entity;
@@ -11,6 +12,7 @@ entity mips is
 architecture dataflow of mips is
     component datapath is
         port(
+				reset : in STD_LOGIC;
                 alu_opcode : in STD_LOGIC_VECTOR(3 downto 0);
                 branch : in STD_LOGIC;
                 reg_dest : in STD_LOGIC; --RegDst
@@ -26,20 +28,21 @@ architecture dataflow of mips is
             );
     end component;
     component controller is
-        port(
-                op_code : in STD_LOGIC_VECTOR(3 downto 0);
-                clk : in STD_LOGIC;
-                aluOP : out STD_LOGIC_VECTOR (3 downto 0);
-                RegDst : out STD_LOGIC;
-                RegWrite : out STD_LOGIC;
-                AluSrc : out STD_LOGIC;
-                MemWrite : out STD_LOGIC;
-                MemToReg : out STD_LOGIC;
-                MemRead : out STD_LOGIC;
-                Branch : out STD_LOGIC;
-                Jump : out STD_LOGIC
-            );
-    end component;
+    port(
+        op_code : in STD_LOGIC_VECTOR(3 downto 0);
+        clk : in STD_LOGIC;
+		aluOP : out STD_LOGIC_VECTOR (3 downto 0);
+		RegDst : out STD_LOGIC;
+		RegWrite : out STD_LOGIC;
+		AluSrc : out STD_LOGIC;
+		MemWrite : out STD_LOGIC;
+		MemToReg : out STD_LOGIC;
+		MemRead : out STD_LOGIC;
+		pcsrc : out STD_LOGIC;
+		Branch : out STD_LOGIC;
+		Jump : out STD_LOGIC
+    );
+end component;
 
     signal alu_opcode : STD_LOGIC_VECTOR(3 downto 0);
     signal opcode : STD_LOGIC_VECTOR(3 downto 0);
@@ -55,6 +58,6 @@ architecture dataflow of mips is
 
 
 begin
-    controller_instance : controller port map(opcode, clk, alu_opcode, reg_dest, reg_write, alu_src, mem_write, mem_reg, mem_read, branch, jump);
-    datapath_instance : datapath port map(alu_opcode, branch, reg_dest, reg_write, alu_src, mem_reg, mem_read, mem_write, pc_src, clk, opcode, jump);
+    controller_instance : controller port map(opcode, clk, alu_opcode, reg_dest, reg_write, alu_src, mem_write, mem_reg, mem_read,pc_src, branch, jump);
+    datapath_instance : datapath port map(reset,alu_opcode, branch, reg_dest, reg_write, alu_src, mem_reg, mem_read, mem_write, pc_src, clk, opcode, jump);
 end dataflow;
