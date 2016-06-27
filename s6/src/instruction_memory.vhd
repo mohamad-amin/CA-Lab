@@ -11,7 +11,7 @@ end instruction_memory;
 
 architecture dataflow of instruction_memory is
     type ram_array is array (15 downto 0) of std_logic_vector (15 downto 0);
-    signal data_array : ram_array := ("0110000011000011","0110000011001111",others=>"0000000000000001");
+    signal data_array : ram_array := ("0110000011000011","0110000011001111",others=>"1000000000110000");
 begin
     process(clk)
     begin

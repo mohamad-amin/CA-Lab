@@ -101,21 +101,21 @@ begin
 			AluSrc <= '1';
 			AluOP<="1000";
 			MemWrite<='0';
-			MemRead<='1';
+			MemRead<='0';
 			MemToReg<='1';
 			pcsrc<= '0';
         end if;
 		if(op_code = "1110") then --store
             RegDst <= '0';
-			RegWrite <='0';
+			RegWrite <='1';
 			AluSrc <= '1';
 			AluOP<="1000";
-			MemWrite<='1';
+			MemWrite<='0';
 			MemRead<='0';
 			MemToReg<='0';
 			pcsrc<= '0';
         end if;
-		if(op_code = "1100") then --beq
+		if(op_code = "1100") then --jump
             RegDst <= '0';
 			RegWrite <='0';
 			AluSrc <= '0';
@@ -124,6 +124,26 @@ begin
 			MemRead<='0';
 			MemToReg<='0';			
 			pcsrc<= '1';
+        end if;
+		if(op_code = "1000") then --addi
+            RegDst <= '0';
+			RegWrite <='1';
+			AluSrc <= '1';
+			AluOP<="1000";
+			MemWrite<='0';
+			MemRead<='0';
+			MemToReg<='0';			
+			pcsrc<= '0';
+        end if;
+		if(op_code = "1001") then --subi
+            RegDst <= '0';
+			RegWrite <='1';
+			AluSrc <= '1';
+			AluOP<="1001";
+			MemWrite<='0';
+			MemRead<='0';
+			MemToReg<='0';			
+			pcsrc<= '0';
         end if;
     end process;
 end behavrial;
