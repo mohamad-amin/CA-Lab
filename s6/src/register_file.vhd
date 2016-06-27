@@ -17,9 +17,9 @@ end entity;
 
 
 architecture behavorial of register_file is
-    type data_array_data is array (15 downto 0) of STD_LOGIC_VECTOR (15 downto 0);
+    type data_array_data is array (0 to 15) of STD_LOGIC_VECTOR (15 downto 0);
 
-    signal data : data_array_data := ("0001000100001000","0001001110011000",others=>"0000000000000111");
+    signal data : data_array_data := ("0000000000000111","0000000000000101","0000000000000010",others=>"0000000000001111");
 begin
           data(to_integer(unsigned(load_address))) <= write_data when write = '1';
   process(clk)

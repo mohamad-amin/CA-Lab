@@ -15,7 +15,8 @@ entity controller is
 		MemRead : out STD_LOGIC;
 		pcsrc : out STD_LOGIC;
 		Branch : out STD_LOGIC;
-		Jump : out STD_LOGIC
+		Jump : out STD_LOGIC;
+		IType : out std_logic
     );
 end entity;
 
@@ -34,6 +35,7 @@ begin
 			MemRead<='0';
 			MemToReg<='0';
 			pcsrc<= '0';
+			IType<='0';
         end if;
 		if(op_code = "0001") then --sub
             RegDst <= '1';
@@ -44,6 +46,7 @@ begin
 			MemRead<='0';
 			MemToReg<='0';
 			pcsrc<= '0';
+			IType<='0';
         end if;
 		if(op_code = "0010") then --and
             RegDst <= '1';
@@ -54,6 +57,7 @@ begin
 			MemRead<='0';
 			MemToReg<='0';
 			pcsrc<= '0';
+			IType<='0';
         end if;
 		if(op_code = "0011") then --or
             RegDst <= '1';
@@ -64,6 +68,7 @@ begin
 			MemRead<='0';
 			MemToReg<='0';
 			pcsrc<= '0';
+			IType<='0';
         end if;
 		if(op_code = "0100") then --MUL
             RegDst <= '1';
@@ -74,6 +79,7 @@ begin
 			MemRead<='0';
 			MemToReg<='0';
 			pcsrc<= '0';
+			IType<='0';
         end if;
 		if(op_code = "0101") then --DIV
             RegDst <= '1';
@@ -84,6 +90,7 @@ begin
 			MemRead<='0';
 			MemToReg<='0';
 			pcsrc<= '0';
+			IType<='0';
         end if;
 		if(op_code = "0110") then --XOR
             RegDst <= '1';
@@ -94,6 +101,18 @@ begin
 			MemRead<='0';
 			MemToReg<='0';
 			pcsrc<= '0';
+			IType<='0';
+        end if;
+		if(op_code = "0111") then --XNOR
+            RegDst <= '1';
+			RegWrite <='1';
+			AluSrc <= '0';
+			AluOP<="0011";
+			MemWrite<='0';
+			MemRead<='0';
+			MemToReg<='0';
+			pcsrc<= '0';
+			IType<='0';
         end if;
 		if(op_code = "1101") then --load
             RegDst <= '0';
@@ -104,6 +123,7 @@ begin
 			MemRead<='0';
 			MemToReg<='1';
 			pcsrc<= '0';
+			IType<='0';
         end if;
 		if(op_code = "1110") then --store
             RegDst <= '0';
@@ -114,6 +134,7 @@ begin
 			MemRead<='0';
 			MemToReg<='0';
 			pcsrc<= '0';
+			IType<='0';
         end if;
 		if(op_code = "1100") then --jump
             RegDst <= '0';
@@ -124,6 +145,7 @@ begin
 			MemRead<='0';
 			MemToReg<='0';			
 			pcsrc<= '1';
+			IType<='0';
         end if;
 		if(op_code = "1000") then --addi
             RegDst <= '0';
@@ -134,6 +156,7 @@ begin
 			MemRead<='0';
 			MemToReg<='0';			
 			pcsrc<= '0';
+			IType<='1';
         end if;
 		if(op_code = "1001") then --subi
             RegDst <= '0';
@@ -144,6 +167,7 @@ begin
 			MemRead<='0';
 			MemToReg<='0';			
 			pcsrc<= '0';
+			IType<='1';
         end if;
     end process;
 end behavrial;

@@ -15,7 +15,8 @@ entity datapath is
             pc_src : in STD_LOGIC; --PCSrc
             clk : in STD_LOGIC;
             opcode : out STD_LOGIC_VECTOR(3 downto 0);
-            jump : STD_LOGIC
+            jump : STD_LOGIC;
+			IType : in std_logic
         );
 end entity;
 
@@ -104,6 +105,9 @@ architecture behavorial of datapath is
     signal pc_in : STD_LOGIC_VECTOR(15 downto 0);
     signal temp : STD_LOGIC := '0';
     signal pc_in_tmp : STD_LOGIC_VECTOR(15 downto 0);
+	
+	signal temp1 : std_logic_vector(3 downto 0) := "1111";
+	
 begin
     instruction_mem : instruction_memory port map(clk, pc_signal, instruction);
     data_mem : data_memory port map(clk, alu_out, alu_out,
@@ -125,8 +129,12 @@ begin
     rs1 <= instruction_p2;
     rs2 <= instruction_p3;
 
-    load_address <= instruction_p3 when reg_dest = '0' else
+    temp1 <= instruction_p3 when reg_dest = '0' else
                     instruction_p4 when reg_dest = '1';
+					
+	load_address <= temp1 when IType = '0' else
+                    instruction_p2 when IType = '1';
+					
     pc_plus_4_tmp <= to_integer(unsigned(pc_signal)) + 1;
     pc_plus_4 <= std_logic_vector(to_unsigned(pc_plus_4_tmp, 16));
 

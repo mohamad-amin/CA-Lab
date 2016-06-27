@@ -96,9 +96,9 @@ begin
 
 
     res <= ands when command = "0000" else
-           ors when command = "0001" else
+           a or b when command = "0001" else
            xors when command = "0010" else
-           xnors  when command = "0011" else
+           a nor b  when command = "0011" else
            shrs  when command = "0100" else
            shls when command = "0101" else
            multiplies when command = "0110" else
